@@ -4,7 +4,6 @@
     @if (Auth::check())
         <div class="row">
             <aside class="col-sm-4">
-                <div class="card">
                     @include('users.card', ['user' => Auth::user()])
             </aside>
             <div class="col-sm-8">

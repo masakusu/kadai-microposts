@@ -11,7 +11,6 @@
                         <p>{!! link_to_route('users.show', 'View profile', ['id' => $user->id]) !!}</p>
                     </div>
                 </div>
-                @include('favorite.favorite_button', ['user' => $user])
             </li>
         @endforeach
     </ul>

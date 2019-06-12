@@ -37,41 +37,41 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'favorites', 'user_id', 'micropost_id')->withTimestamps();
     }
     
-    public function favorite($userId)
+    public function favorite($micropostId)
     {
-        $exist = $this->is_favorites($userId);
-        $its_me = $this->id == $userId;
+        $exist = $this->is_favorites($micropostId);
+        $its_me = $this->id == $micropostId;
     
         if ($exist || $its_me) {
             return false;
         } else {
-            $this->favorites()->attach($userId);
+            $this->favorites()->attach($micropostId);
             return true;
         }
     }
     
-    public function unfavorite($userId)
+    public function unfavorite($micropostId)
     {
-        $exist = $this->is_favorites($userId);
-        $its_me = $this->id == $userId;
+        $exist = $this->is_favorites($micropostId);
+        $its_me = $this->id == $micropostId;
     
         if ($exist && !$its_me) {
-            $this->favorites()->detach($userId);
+            $this->favorites()->detach($micropostId);
             return true;
         } else {
             return false;
         }
     }
     
-    public function is_favorites($userId)
+    public function is_favorites($micropostId)
     {
-        return $this->favorites()->where('micropost_id', $userId)->exists();
+        return $this->favorites()->where('micropost_id', $micropostId)->exists();
     }
     
     public function feed_microposts()
     {
-        $favorite_user_ids = $this->favorites()->pluck('users.id')->toArray();
-        $favorite_user_ids[] = $this->id;
-        return Micropost::whereIn('user_id', $favorite_user_ids);
+        $favorite_micropost_ids = $this->favorites()->pluck('microposts.id')->toArray();
+        $favorite_micropost_ids[] = $this->id;
+        return Micropost::whereIn('micropost_id', $micropostId);
     }
 }

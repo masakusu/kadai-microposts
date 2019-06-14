@@ -70,7 +70,6 @@ class User extends Authenticatable
     public function feed_microposts()
     {
         $favorite_micropost_ids = $this->favorites()->pluck('microposts.id')->toArray();
-        $favorite_micropost_ids[] = $this->id;
         return Micropost::whereIn('user_id', $favorite_micropost_ids);
     }
 }
